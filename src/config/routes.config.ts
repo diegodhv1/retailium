@@ -17,6 +17,18 @@ export const routesConfig: RouteConfig[] = [
     path: "/productos",
     label: "Productos",
     icon: "inventory",
+    children: [
+      {
+        path: "/productos/nuevo",
+        label: "Nuevo Producto",
+        hideFromMenu: true,
+      },
+      {
+        path: "/productos/:id",
+        label: "Detalle",
+        hideFromMenu: true,
+      },
+    ],
   },
   {
     path: "/venta",
