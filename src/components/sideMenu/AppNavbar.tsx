@@ -38,7 +38,10 @@ export default function AppNavbar() {
     <AppBar
       position="fixed"
       sx={{
-        display: { xs: "auto", md: "none" },
+        // mostrar en todos los tamaños; cambiar según diseño si quieres solo en desktop/mobile
+        display: { xs: "flex", md: "flex" },
+        // asegurar que el navbar quede por encima del Drawer
+        zIndex: (theme) => (theme.zIndex?.appBar ?? 1100) + 100,
         boxShadow: 0,
         bgcolor: "background.paper",
         backgroundImage: "none",
@@ -68,7 +71,7 @@ export default function AppNavbar() {
               component="h1"
               sx={{ color: "text.primary" }}
             >
-              Dashboard
+              Retailium
             </Typography>
           </Stack>
           <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>

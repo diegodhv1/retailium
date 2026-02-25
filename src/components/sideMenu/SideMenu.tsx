@@ -31,8 +31,24 @@ export default function SideMenu() {
       variant="permanent"
       sx={{
         display: { xs: "none", md: "block" },
+        // make the drawer start below the fixed AppBar and respect any template frame offset
         [`& .${drawerClasses.paper}`]: {
+          position: "fixed",
+          left: 0,
+          // use AppBar heights: 56px on xs, 64px on md and up.
+          // include --template-frame-height if present.
+          top: {
+            xs: "calc(var(--template-frame-height, 0px) + 56px)",
+            md: "calc(var(--template-frame-height, 0px) + 64px)",
+          },
+          height: {
+            xs: "calc(100dvh - (var(--template-frame-height, 0px) + 56px))",
+            md: "calc(100dvh - (var(--template-frame-height, 0px) + 64px))",
+          },
+          width: 240,
+          boxSizing: "border-box",
           backgroundColor: "background.paper",
+          zIndex: (theme) => theme.zIndex?.drawer ?? 1000,
         },
       }}
     >

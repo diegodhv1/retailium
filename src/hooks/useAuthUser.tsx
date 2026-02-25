@@ -4,12 +4,12 @@ type AuthUser = {
   email?: string;
   first_name?: string;
   last_name?: string;
+  role?: string;
 } | null;
 
 export function useAuthUser() {
   const [user, setUser] = React.useState<AuthUser>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
-  // TODO - Handle logic when user is not authenticated
 
   const loadUser = React.useCallback(async () => {
     setLoading(true);

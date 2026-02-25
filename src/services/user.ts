@@ -12,6 +12,7 @@ const getAuthUser = async (): Promise<AuthUser | null> => {
   } = await supabase.auth.getUser();
   const email = user?.email ?? null;
   const { data } = await supabase.from("users").select("*").eq("email", email);
+  console.log("data", data);
 
   return data ? data[0] : null;
 };
