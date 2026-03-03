@@ -1,23 +1,22 @@
 import React from "react";
 import { SupabaseUserService } from "../services/user";
-type AuthUser = {
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-  role?: string;
-} | null;
+import type { AuthUser } from "../services/user";
 
 export function useAuthUser() {
-  const [user, setUser] = React.useState<AuthUser>(null);
+  const [user, setUser] = React.useState<AuthUser>(null as unknown as AuthUser);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   const loadUser = React.useCallback(async () => {
     setLoading(true);
     try {
-      const u = await SupabaseUserService.getAuthUser();
-      setUser(u ?? null);
+      const _user = await SupabaseUserService.getAuthUser();
+      console.log(_user);
+
+      if (_user?.email && _user.email !== "") {
+        setUser(_user);
+      }
     } catch (err) {
-      setUser(null);
+      setUser(null as unknown as AuthUser);
       throw new Error("Error loading auth user", err as Error);
     } finally {
       setLoading(false);

@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import SideMenu from "./sideMenu/SideMenu";
 import Stack from "@mui/material/Stack";
 import { alpha } from "@mui/material/styles";
+import { AuthContext } from "../context/AuthContextUtils";
 
 interface ProtectedRouteProps {
   element: React.ReactNode;
@@ -33,7 +34,7 @@ export function ProtectedRoute(props: ProtectedRouteProps) {
     );
   }
 
-  if (!user) {
+  if (!user?.email || user.email === "") {
     return <Navigate to="/signIn" replace />;
   }
 
@@ -42,7 +43,7 @@ export function ProtectedRoute(props: ProtectedRouteProps) {
   }
 
   return (
-    <>
+    <AuthContext.Provider value={{ user, loading }}>
       <AppTheme {...props}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: "flex", minHeight: "100dvh" }}>
@@ -85,6 +86,6 @@ export function ProtectedRoute(props: ProtectedRouteProps) {
           </Box>
         </Box>
       </AppTheme>
-    </>
+    </AuthContext.Provider>
   );
 }

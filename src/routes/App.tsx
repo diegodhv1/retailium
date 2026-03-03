@@ -4,15 +4,15 @@ import { useAppRoutes } from "../hooks/useAppRoutes";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import Dashboard from "../components/Dashboard";
 import ProductsList from "../components/Products";
-import ProductForm from "../components/ProductForm";
 import Sales from "../components/sales";
 import ProductDetail from "../components/ProductDetail";
+import ProductCreate from "../components/Products/create";
 
 // Importar páginas
 const pageComponents: Record<string, React.ReactNode> = {
   "/dashboard": <Dashboard />,
   "/productos": <ProductsList />,
-  "/productos/nuevo": <ProductForm />,
+  "/productos/nuevo": <ProductCreate />,
   "/productos/:id": <ProductDetail />,
   "/venta": <Sales />,
 };
