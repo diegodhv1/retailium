@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuthUser } from "../hooks/useAuthUser";
 import AppTheme from "../../theme/AppTheme";
 import AppNavbar from "./sideMenu/AppNavbar";
 import Box from "@mui/material/Box";
@@ -8,7 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import SideMenu from "./sideMenu/SideMenu";
 import Stack from "@mui/material/Stack";
 import { alpha } from "@mui/material/styles";
-import { AuthContext } from "../context/AuthContextUtils";
+import * as AuthContextUtils from "../context/AuthContextUtils";
 
 interface ProtectedRouteProps {
   element: React.ReactNode;
@@ -17,7 +16,7 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute(props: ProtectedRouteProps) {
   const { element, requiredRole } = props;
-  const { user, loading } = useAuthUser();
+  const { user, loading } = AuthContextUtils.useAuthContext();
 
   if (loading) {
     return (
@@ -43,9 +42,8 @@ export function ProtectedRoute(props: ProtectedRouteProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
-      <AppTheme {...props}>
-        <CssBaseline enableColorScheme />
+    <AppTheme {...props}>
+      <CssBaseline enableColorScheme />
         <Box sx={{ display: "flex", minHeight: "100dvh" }}>
           <SideMenu />
 
@@ -86,6 +84,5 @@ export function ProtectedRoute(props: ProtectedRouteProps) {
           </Box>
         </Box>
       </AppTheme>
-    </AuthContext.Provider>
   );
 }

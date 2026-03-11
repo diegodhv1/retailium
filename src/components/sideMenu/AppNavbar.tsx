@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as AuthContextUtils from "../../context/AuthContextUtils";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,7 +8,7 @@ import MuiToolbar from "@mui/material/Toolbar";
 import { tabsClasses } from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
 import SideMenuMobile from "./SideMenuMobile";
 import MenuButton from "./MenuButton";
 
@@ -29,6 +30,7 @@ const Toolbar = styled(MuiToolbar)({
 
 export default function AppNavbar() {
   const [open, setOpen] = React.useState(false);
+  const { company } = AuthContextUtils.useAuthContext();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -71,10 +73,14 @@ export default function AppNavbar() {
               component="h1"
               sx={{ color: "text.primary" }}
             >
-              Retailium
+              {company?.name || "Retailium"}
             </Typography>
           </Stack>
-          <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
+          <MenuButton
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+            sx={{ display: { xs: "inline-flex", md: "none" } }}
+          >
             <MenuRoundedIcon />
           </MenuButton>
           <SideMenuMobile open={open} toggleDrawer={toggleDrawer} />
@@ -104,7 +110,7 @@ export function CustomIcon() {
         boxShadow: "inset 0 2px 5px rgba(255, 255, 255, 0.3)",
       }}
     >
-      <DashboardRoundedIcon color="inherit" sx={{ fontSize: "1rem" }} />
+      <BusinessRoundedIcon color="inherit" sx={{ fontSize: "1rem" }} />
     </Box>
   );
 }

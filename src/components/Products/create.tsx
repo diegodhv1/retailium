@@ -1,7 +1,10 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import useNotifications from "../../hooks/useNotifications/useNotifications";
+import GoBackButton from "../shared/GoBackButton";
 import { validateProduct } from "../Forms/Product/validation";
 import {
   createProduct,
@@ -11,6 +14,7 @@ import {
 import type { ProductFormState } from "../Forms/Product";
 import ProductForm from "../Forms/Product";
 import type { FormFieldValue } from "../Forms/Product";
+import { useAuthUser } from "../../hooks/useAuthUser";
 
 const INITIAL_VALUES: Partial<ProductFormState["values"]> = {
   stock: "",
@@ -21,6 +25,7 @@ const INITIAL_VALUES: Partial<ProductFormState["values"]> = {
 export default function ProductCreate() {
   const navigate = useNavigate();
   const notifications = useNotifications();
+  const { user } = useAuthUser();
 
   const [formState, setFormState] = React.useState<ProductFormState>({
     values: INITIAL_VALUES,
@@ -136,6 +141,8 @@ export default function ProductCreate() {
         stock: Number(formState.values.stock) || 0,
         purchase_price: Number(formState.values.purchase_price) || 0,
         selling_price: Number(formState.values.selling_price) || 0,
+        user_id: user?.id,
+        branch_id: user?.branch_id,
       };
       await createProduct(payload);
       notifications.show("Producto creado correctamente", {
@@ -153,8 +160,13 @@ export default function ProductCreate() {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>Nuevo Producto</h1>
-      <Box sx={{ mt: 8 }}>
+      <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
+        <GoBackButton to="/productos" />
+        <Typography variant="h4" component="h1">
+          Nuevo Producto
+        </Typography>
+      </Stack>
+      <Box sx={{ mt: 4 }}>
         <ProductForm
           formState={formState}
           onFieldChange={handleFieldChange}

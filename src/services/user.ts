@@ -4,6 +4,7 @@ import { supabase } from "../supabaseClient";
 export interface AuthUser extends User {
   first_name: string;
   last_name: string;
+  branch_id: string;
 }
 
 const getAuthUser = async (): Promise<AuthUser | null> => {

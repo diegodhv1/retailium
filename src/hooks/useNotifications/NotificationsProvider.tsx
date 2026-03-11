@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import type { SnackbarCloseReason } from '@mui/material/Snackbar';
-import type { CloseReason } from '@mui/material/SpeedDial';
 import CloseIcon from '@mui/icons-material/Close';
 import useSlotProps from '@mui/utils/useSlotProps';
 import NotificationsContext from './NotificationsContext';
@@ -44,7 +43,7 @@ function Notification({
   const { severity, actionText, onAction, autoHideDuration } = options;
 
   const handleClose = React.useCallback(
-    (event: unknown, reason?: CloseReason | SnackbarCloseReason) => {
+    (_event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
       if (reason === 'clickaway') {
         return;
       }

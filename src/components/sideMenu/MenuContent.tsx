@@ -10,12 +10,16 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PeopleIcon from "@mui/icons-material/People";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useAppRoutes } from "../../hooks/useAppRoutes";
 
 const iconMap: Record<string, React.ReactNode> = {
   dashboard: <DashboardIcon />,
   inventory: <InventoryIcon />,
   shopping_cart: <ShoppingCartIcon />,
+  people: <PeopleIcon />,
+  local_shipping: <LocalShippingIcon />,
 };
 
 export default function MenuContent() {

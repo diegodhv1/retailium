@@ -2,12 +2,11 @@ import * as React from "react";
 import { useNavigate, useParams } from "react-router";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import useNotifications from "../../hooks/useNotifications/useNotifications";
+import GoBackButton from "../shared/GoBackButton";
 import type { FormFieldValue, ProductFormState } from "../Forms/Product";
 import {
   getProduct,
@@ -261,12 +260,7 @@ export default function ProductEdit() {
   return (
     <div style={{ padding: "2rem" }}>
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate("/productos")}
-        >
-          Regresar
-        </Button>
+        <GoBackButton to="/productos" />
         <Typography variant="h4" component="h1">
           Detalle Producto
         </Typography>

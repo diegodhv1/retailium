@@ -35,4 +35,38 @@ export const routesConfig: RouteConfig[] = [
     label: "Ventas",
     icon: "shopping_cart",
   },
+  {
+    path: "/clientes",
+    label: "Clientes",
+    icon: "people",
+    children: [
+      {
+        path: "/clientes/:id",
+        label: "Detalle",
+        hideFromMenu: true,
+      },
+      {
+        path: "/clientes/nuevo",
+        label: "Nuevo Cliente",
+        hideFromMenu: true,
+      }
+    ]
+  },
+  {
+    path: "/proveedores",
+    label: "Proveedores",
+    icon: "local_shipping",
+    children: [
+      {
+        path: "/proveedores/:id",
+        label: "Detalle",
+        hideFromMenu: true,
+      },
+      {
+        path: "/proveedores/nuevo",
+        label: "Nuevo Proveedor",
+        hideFromMenu: true,
+      }
+    ]
+  }
 ];

@@ -1,21 +1,31 @@
-import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabaseClient";
 
-export interface AuthUser extends User {
-  first_name: string;
-  last_name: string;
-}
-
-const getCompany = async (): Promise<AuthUser | null> => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const email = user?.email ?? null;
-  const { data } = await supabase.from("users").select("*").eq("email", email);
-
-  return data ? data[0] : null;
+export type Company = {
+  id: string;
+  name: string;
 };
 
-export const SupabaseUserService = {
-  getCompany,
+const getCompanyByBranchId = async (branch_id: string): Promise<Company | null> => {
+  // First get the branch to find the company_id
+  const { data: branch, error: branchError } = await supabase
+    .from("branches")
+    .select("company_id")
+    .eq("id", branch_id)
+    .single();
+
+  if (branchError || !branch?.company_id) return null;
+
+  // Then fetch the company
+  const { data: company, error: companyError } = await supabase
+    .from("companies")
+    .select("id, name")
+    .eq("id", branch.company_id)
+    .single();
+
+  if (companyError) return null;
+  return company as Company;
+};
+
+export const SupabaseCompanyService = {
+  getCompanyByBranchId,
 };

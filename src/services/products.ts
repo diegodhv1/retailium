@@ -1,23 +1,20 @@
 import { supabase } from "../supabaseClient";
 
 export type Product = {
-  id?: number;
+  id?: string;
   name: string;
   sku: string;
   stock: number;
   purchase_price: number;
   selling_price: number;
-  branch_id?: number;
+  branch_id?: string;
+  user_id?: string;
 };
 
 export async function createProduct(
-  values: Omit<Product, "id" | "branch_id">,
-  branch_id?: number,
+  values: Omit<Product, "id">,
 ) {
-  const { error } = await supabase.from("products").insert({
-    ...values,
-    branch_id,
-  });
+  const { error } = await supabase.from("products").insert(values);
 
   if (error) throw error;
 }

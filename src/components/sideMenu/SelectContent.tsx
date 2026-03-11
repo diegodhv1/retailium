@@ -1,17 +1,14 @@
 import * as React from "react";
+import * as AuthContextUtils from "../../context/AuthContextUtils";
 import MuiAvatar from "@mui/material/Avatar";
 import MuiListItemAvatar from "@mui/material/ListItemAvatar";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListSubheader from "@mui/material/ListSubheader";
-import Select, { selectClasses } from "@mui/material/Select";
-import Divider from "@mui/material/Divider";
+import Select, { type SelectChangeEvent, selectClasses } from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import DevicesRoundedIcon from "@mui/icons-material/DevicesRounded";
-import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
-import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
+import StorefrontRoundedIcon from "@mui/icons-material/StorefrontRounded";
+import { getBranches, type Branch } from "../../services/branches";
 
 const Avatar = styled(MuiAvatar)(({ theme }) => ({
   width: 28,
@@ -27,20 +24,43 @@ const ListItemAvatar = styled(MuiListItemAvatar)({
 });
 
 export default function SelectContent() {
-  const [company, setCompany] = React.useState("");
+  const { user, company, selectedBranchId, setSelectedBranchId } = AuthContextUtils.useAuthContext();
+  const [branches, setBranches] = React.useState<Branch[]>([]);
 
-  const handleChange = (event: { target: { value: string } }) => {
-    setCompany(event.target.value as string);
+  React.useEffect(() => {
+    async function fetchBranches() {
+      if (!company?.id) return;
+      try {
+        const data = await getBranches(company.id);
+        setBranches(data);
+        
+        // Default to the user's branch if available and no branch is selected yet
+        if (!selectedBranchId) {
+          if (user?.branch_id && data.some(b => b.id === user.branch_id)) {
+            setSelectedBranchId(user.branch_id);
+          } else if (data.length > 0) {
+            setSelectedBranchId(data[0].id);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load branches", error);
+      }
+    }
+    fetchBranches();
+  }, [user?.branch_id, company?.id, selectedBranchId, setSelectedBranchId]);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedBranchId(event.target.value);
   };
 
   return (
     <Select
-      labelId="company-select"
-      id="company-simple-select"
-      value={company}
+      labelId="branch-select"
+      id="branch-simple-select"
+      value={selectedBranchId || ""}
       onChange={handleChange}
       displayEmpty
-      inputProps={{ "aria-label": "Select company" }}
+      inputProps={{ "aria-label": "Select branch" }}
       fullWidth
       sx={{
         maxHeight: 56,
@@ -56,47 +76,17 @@ export default function SelectContent() {
         },
       }}
     >
-      <ListSubheader sx={{ pt: 0 }}>Production</ListSubheader>
-      <MenuItem value="">
-        <ListItemAvatar>
-          <Avatar alt="Sitemark web">
-            <DevicesRoundedIcon sx={{ fontSize: "1rem" }} />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Sitemark-web" secondary="Web app" />
-      </MenuItem>
-      <MenuItem value={10}>
-        <ListItemAvatar>
-          <Avatar alt="Sitemark App">
-            <SmartphoneRoundedIcon sx={{ fontSize: "1rem" }} />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Sitemark-app" secondary="Mobile application" />
-      </MenuItem>
-      <MenuItem value={20}>
-        <ListItemAvatar>
-          <Avatar alt="Sitemark Store">
-            <DevicesRoundedIcon sx={{ fontSize: "1rem" }} />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Sitemark-Store" secondary="Web app" />
-      </MenuItem>
-      <ListSubheader>Development</ListSubheader>
-      <MenuItem value={30}>
-        <ListItemAvatar>
-          <Avatar alt="Sitemark Store">
-            <ConstructionRoundedIcon sx={{ fontSize: "1rem" }} />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Sitemark-Admin" secondary="Web app" />
-      </MenuItem>
-      <Divider sx={{ mx: -1 }} />
-      <MenuItem value={40}>
-        <ListItemIcon>
-          <AddRoundedIcon />
-        </ListItemIcon>
-        <ListItemText primary="Add product" secondary="Web app" />
-      </MenuItem>
+      <ListSubheader sx={{ pt: 0 }}>Sucursales</ListSubheader>
+      {branches.map((branch) => (
+        <MenuItem key={branch.id} value={branch.id}>
+          <ListItemAvatar>
+            <Avatar alt={branch.name}>
+              <StorefrontRoundedIcon sx={{ fontSize: "1rem" }} />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={branch.name} secondary="Tienda o Sucursal" />
+        </MenuItem>
+      ))}
     </Select>
   );
 }

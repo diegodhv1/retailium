@@ -7,6 +7,10 @@ import ProductsList from "../components/Products";
 import Sales from "../components/sales";
 import ProductDetail from "../components/ProductDetail";
 import ProductCreate from "../components/Products/create";
+import CustomersList from "../components/Customers";
+import CustomerEdit from "../components/Customers/edit";
+import ProvidersList from "../components/Providers";
+import ProviderEdit from "../components/Providers/edit";
 
 // Importar páginas
 const pageComponents: Record<string, React.ReactNode> = {
@@ -15,6 +19,12 @@ const pageComponents: Record<string, React.ReactNode> = {
   "/productos/nuevo": <ProductCreate />,
   "/productos/:id": <ProductDetail />,
   "/venta": <Sales />,
+  "/clientes": <CustomersList />,
+  "/clientes/:id": <CustomerEdit />,
+  "/clientes/nuevo": <CustomerEdit />,
+  "/proveedores": <ProvidersList />,
+  "/proveedores/:id": <ProviderEdit />,
+  "/proveedores/nuevo": <ProviderEdit />,
 };
 
 export default function App() {

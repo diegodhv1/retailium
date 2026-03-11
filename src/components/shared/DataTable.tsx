@@ -7,6 +7,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Alert from "@mui/material/Alert";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -141,7 +143,7 @@ export default function DataTable<T extends Record<string, unknown>>(
             <GridActionsCellItem
               key="edit"
               label="Edit"
-              icon={<></>}
+              icon={<EditIcon />}
               onClick={() => actions.onEdit!(row)}
               showInMenu={false}
             />
@@ -150,7 +152,7 @@ export default function DataTable<T extends Record<string, unknown>>(
             <GridActionsCellItem
               key="delete"
               label="Delete"
-              icon={<></>}
+              icon={<DeleteIcon />}
               onClick={async () => await actions.onDelete!(row)}
               showInMenu={false}
             />
