@@ -8,6 +8,7 @@ interface AuthContextType {
   loading: boolean;
   selectedBranchId: string | null;
   setSelectedBranchId: (id: string | null) => void;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = React.createContext<AuthContextType>({
@@ -16,6 +17,7 @@ export const AuthContext = React.createContext<AuthContextType>({
   loading: true,
   selectedBranchId: null,
   setSelectedBranchId: () => {},
+  logout: async () => {},
 });
 
 export function useAuthContext() {

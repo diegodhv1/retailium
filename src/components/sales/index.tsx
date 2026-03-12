@@ -425,7 +425,15 @@ export default function Sales() {
               onClick={handleCheckout}
               disabled={cartItems.length === 0 || isProcessing}
               startIcon={isProcessing ? <CircularProgress size={20} color="inherit" /> : null}
-              sx={{ py: 1.5, fontSize: "1.1rem" }}
+              sx={{ 
+                py: 1.5, 
+                fontSize: "1.1rem",
+                "&.Mui-disabled": {
+                  bgcolor: "rgba(0, 0, 0, 0.26)", // Standard MUI disabled background
+                  color: "#ffffff", // Pure white as requested
+                  opacity: 0.8
+                }
+              }}
             >
               Finalizar Venta
             </Button>

@@ -144,8 +144,17 @@ export default function Dashboard() {
               color="success" 
               startIcon={<PrintIcon />} 
               onClick={handlePrint}
+              sx={{
+                // On mobile, only show PDF
+                '& .MuiButton-startIcon': { mr: { xs: 0, sm: 1 } }
+              }}
             >
-              Exportar PDF / Imprimir
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                Exportar PDF / Imprimir
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>
+                PDF
+              </Box>
             </Button>
           </Stack>
         </Stack>

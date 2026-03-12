@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import SignUp from "../SignUp";
+import SignIn from "../SignIn";
 import { useAppRoutes } from "../hooks/useAppRoutes";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import Dashboard from "../components/Dashboard";
@@ -33,8 +33,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SignUp />} />
-        <Route path="/signIn" element={<SignUp />} />
+        <Route path="/" element={<SignIn />} />
+        <Route path="/signIn" element={<SignIn />} />
 
         {flatRoutes.map((route) => (
           <Route

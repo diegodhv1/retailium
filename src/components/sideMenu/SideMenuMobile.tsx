@@ -1,3 +1,4 @@
+import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -9,6 +10,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import MenuButton from "./MenuButton";
 import MenuContent from "./MenuContent";
 import { useAuthUser } from "../../hooks/useAuthUser";
+import { AuthContext } from "../../context/AuthContextUtils";
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
@@ -20,6 +22,7 @@ export default function SideMenuMobile({
   toggleDrawer,
 }: SideMenuMobileProps) {
   const { fullName } = useAuthUser();
+  const { logout } = React.useContext(AuthContext);
 
   return (
     <Drawer
@@ -69,6 +72,7 @@ export default function SideMenuMobile({
             variant="outlined"
             fullWidth
             startIcon={<LogoutRoundedIcon />}
+            onClick={logout}
           >
             Logout
           </Button>
